@@ -1,6 +1,7 @@
 package test;
 
 import java.io.IOException;
+
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -14,7 +15,8 @@ public class User {
 
     public static void main(String[] args) throws IOException {
         User example = new User();
-        String response = example.run("http://ya.ru");
+        String t = "fbed6ed9ed627bcd15d499e33ad311715d61f38ff8242136df266103edb49ab5def307186a158587810fc";
+        String response = example.run("https://api.vk.com/method/friends.getOnline?v=5.52&access_token=" + t);
         System.out.println(response);
     }
 
