@@ -19,25 +19,29 @@ import java.util.List;
  * Created by FDR on 05.03.2017.
  */
 public class PhotoUploader {
-    public static void main(String[] args) throws ClientException, ApiException {
+    UserActor actor;
+
+    public PhotoUploader(UserActor actor) {
+        this.actor = actor;
+    }
+
+
+    public void uploadPhoto(String path) throws ClientException, ApiException {
         TransportClient transportClient = HttpTransportClient.getInstance();
         VkApiClient vk = new VkApiClient(transportClient);
-        int id = 42298701;
-        String token = "d627a094d938fb53965c8e2582a8d2cbee388b49192e72109480a94018fff4685426e30ac4fa22e26e4b6";
-        UserActor actor = new UserActor(id, token);
         PhotoUpload serverResponse = vk.photos().getWallUploadServer(actor).execute();
-        File file = new File("C:\\Users\\Fgolo\\Pictures\\1.jpg");
+        File file = new File(path);
         WallUploadResponse uploadResponse = vk.upload().photoWall(serverResponse.getUploadUrl(), file).execute();
         List<Photo> photoList = vk.photos().saveWallPhoto(actor, uploadResponse.getPhoto())
                 .server(uploadResponse.getServer())
                 .hash(uploadResponse.getHash())
                 .execute();
-
         Photo photo = photoList.get(0);
         String attachId = "photo" + photo.getOwnerId() + "_" + photo.getId();
         PostResponse getResponse = vk.wall().post(actor)
                 .attachments(attachId)
                 .execute();
+
 
     }
 }
