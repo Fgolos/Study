@@ -4,6 +4,7 @@ import com.vk.api.sdk.client.actors.UserActor;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.objects.wall.WallpostFull;
+import com.vk.api.sdk.objects.wall.responses.GetResponse;
 import java.util.List;
 
 /**
@@ -29,9 +30,10 @@ public class Runner {
 //        AddСomment addСomment = new AddСomment(actor);
 //        addСomment.addComment("test");
         Wallget wallget = new Wallget(actor);
-        final List<WallpostFull> wallpostFulls = wallget.wallGet();
-        for (int i = 0; i < wallpostFulls.size(); i++) {
-            final WallpostFull wallpostFull = wallpostFulls.get(i);
+        final GetResponse wallpostFulls = wallget.wallGet();
+        final List<WallpostFull> items = wallpostFulls.getItems();
+        for (int i = 0; i < items.size(); i++) {
+            final WallpostFull wallpostFull = items.get(i);
             System.out.println(wallpostFull.getText());
         }
 
