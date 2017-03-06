@@ -3,6 +3,8 @@ package test;
 import com.vk.api.sdk.client.actors.UserActor;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
+import com.vk.api.sdk.objects.wall.WallpostFull;
+import java.util.List;
 
 /**
  * Created by FDR on 05.03.2017.
@@ -27,8 +29,11 @@ public class Runner {
 //        AddСomment addСomment = new AddСomment(actor);
 //        addСomment.addComment("test");
         Wallget wallget = new Wallget(actor);
-        Wallget test = wallget;
-        System.out.println(test);
+        final List<WallpostFull> wallpostFulls = wallget.wallGet();
+        for (int i = 0; i < wallpostFulls.size(); i++) {
+            final WallpostFull wallpostFull = wallpostFulls.get(i);
+            System.out.println(wallpostFull.getText());
+        }
 
     }
 }
