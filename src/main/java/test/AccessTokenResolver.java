@@ -18,7 +18,7 @@ public class AccessTokenResolver {
         TransportClient transportClient = HttpTransportClient.getInstance();
         VkApiClient vk = new VkApiClient(transportClient);
         int appId = 5908645;
-        String code = "58ff80dd2512ae4660";
+        String code = "59ad56787d48f3b178";
         String clientSecret = "XAwD3qvLx5wWvCzc6vNj";
         String redirectURL = "";
         UserAuthResponse authResponse = vk.oauth()

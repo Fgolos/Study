@@ -6,24 +6,23 @@ import com.vk.api.sdk.client.actors.UserActor;
 import com.vk.api.sdk.exceptions.ApiException;
 import com.vk.api.sdk.exceptions.ClientException;
 import com.vk.api.sdk.httpclient.HttpTransportClient;
-import com.vk.api.sdk.objects.wall.responses.CreateCommentResponse;
-import com.vk.api.sdk.queries.wall.WallCreateCommentQuery;
-
+import com.vk.api.sdk.objects.messages.Message;
+import com.vk.api.sdk.objects.messages.MessageAttachment;
 
 /**
  * Created by FDR on 06.03.2017.
  */
-//42298701
-public class AddСomment {
+public class SendMessage {
     UserActor actor;
 
-    public AddСomment(UserActor actor) {
+    public SendMessage(UserActor actor) {
         this.actor = actor;
     }
 
-    public void addComment(String massege) throws ClientException, ApiException {
+    public void sendMessage(String message) throws ClientException, ApiException {
         TransportClient transportClient = HttpTransportClient.getInstance();
         VkApiClient vk = new VkApiClient(transportClient);
-        CreateCommentResponse commentQuery = vk.wall().createComment(actor, 489).message(massege).execute();
+        Integer execute = vk.messages().send(actor).peerId(11055539).message(message).execute();
     }
 }
+
