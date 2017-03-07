@@ -1,4 +1,4 @@
-package test;
+package com.home.vk.integration.market;
 
 import com.vk.api.sdk.client.actors.UserActor;
 import com.vk.api.sdk.exceptions.ApiException;
@@ -28,22 +28,32 @@ public class Runner {
 //        addСomment.addComment("test");
 
         //получить список ИД постов со стены
-//        Wallget wallget = new Wallget(actor);
-//        final GetResponse wallpostFulls = wallget.wallGet();
-//        final List<WallpostFull> items = wallpostFulls.getItems();
-//        for (int i = 0; i < items.size(); i++) {
-//            final WallpostFull wallpostFull = items.get(i);
-//            System.out.println(wallpostFull.getId());
+        Wallget wallget = new Wallget(actor);
+        final GetResponse wallpostFulls = wallget.wallGet();
+        final List<WallpostFull> items = wallpostFulls.getItems();
+        for (int i = 0; i < items.size(); i++) {
+            final WallpostFull wallpostFull = items.get(i);
+            System.out.println(wallpostFull.getId());
 //       }
-        //Комент к записи.
+            //Комент к записи.
 //        AddСomment addСomment = new AddСomment(actor);
 //        addСomment.addComment("hello");
-        //Посыл сообщения
+            //Посыл сообщения
 //        SendMessage sendMessage = new SendMessage(actor);
 //        sendMessage.sendMessage("Как дела");
-        Likes likes = new Likes(actor);
-        likes.likes();
+            //Добавляет лайк в посте на стене
+//        Likes likes = new Likes(actor);
+//        likes.likes();
+
+//        ChatId chatId = new ChatId(actor);
+//        System.out.println(chatId.chatId());
+            //Создать чат
+//        CreatChat creatChat = new CreatChat(actor);
+//        creatChat.creatChat();
+        InfoMessage infoMessage = new InfoMessage(actor);
+        infoMessage.messageId();
 
 
+        }
     }
 }

@@ -1,4 +1,4 @@
-package test;
+package com.home.vk.integration.market;
 
 import com.vk.api.sdk.client.TransportClient;
 import com.vk.api.sdk.client.VkApiClient;
