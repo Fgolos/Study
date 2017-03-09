@@ -1,6 +1,6 @@
 package com.home.vk.integration.market;
 
-import com.vk.api.sdk.actions.Users;
+
 import com.vk.api.sdk.client.TransportClient;
 import com.vk.api.sdk.client.VkApiClient;
 import com.vk.api.sdk.client.actors.UserActor;
@@ -10,24 +10,9 @@ import com.vk.api.sdk.httpclient.HttpTransportClient;
 import com.vk.api.sdk.objects.photos.Photo;
 import com.vk.api.sdk.objects.photos.responses.GetMarketUploadServerResponse;
 import com.vk.api.sdk.objects.photos.responses.MarketUploadResponse;
-import com.vk.api.sdk.objects.wall.PostedPhoto;
-import com.vk.api.sdk.queries.market.MarketAddQuery;
-import com.vk.api.sdk.queries.photos.PhotosGetMarketUploadServerQuery;
-import com.vk.api.sdk.queries.upload.UploadPhotoMarketQuery;
-import org.apache.commons.collections4.Get;
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 
-import javax.annotation.PostConstruct;
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.List;
 
 /**
@@ -57,16 +42,11 @@ public class PhotoMarketUploaderServer {
         String photo = uploadPhotoMarketQuery.getPhoto();
         String cropData = uploadPhotoMarketQuery.getCropData();
         String cropHash = uploadPhotoMarketQuery.getCropHash();
-        vk.photos().saveMarketPhoto(actor, photo, server, cropHash).execute();
-        System.out.println(server);
-        System.out.println(photo);
-        System.out.println(cropData);
-        System.out.println(cropHash);
+        List<Photo> photoList = vk.photos().saveMarketPhoto(actor, photo, server, cropHash).execute();
+        Integer id = photoList.get(1).getId();
+        vk.market().add(actor, 141781394, "Велосипед", "Хороший велосипед", 1, 564687, id).execute();
 
 
-//        vk.market().add(actor,
-//                -141781394, "Велосипед",
-//                "Отличный велосипед", 1, 54545,)
 
     }
 }
