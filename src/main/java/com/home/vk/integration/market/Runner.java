@@ -11,7 +11,8 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Paths;
 import java.util.List;
-//393d4ff079e65ed52a260e2fb15b4ed7d3a79268b7187dcf754a281e22cab931750f1a5ceaa7310d42e0c
+//9beb757ca900b576595739d9b36d3a4774e03cfc4c534b336766d309323639db67a899c128e420652a9e0 рабочий токен
+//d98a1355ddc5966a72c7c7453d873526dda3460e8ca7b8783fffa65587cabaf729f76864d4b7e4ef84150
 
 /**
  * Created by FDR on 05.03.2017.
@@ -63,8 +64,10 @@ public class Runner {
 
 //        AddAlbumMarket addAlbumMarket = new AddAlbumMarket(actor);
 //        addAlbumMarket.addAlbumMarket();
-        PhotoMarketUploaderServer photoMarketUploaderServer=new PhotoMarketUploaderServer(actor);
-        photoMarketUploaderServer.uploadPhotoMarket();
+//        PhotoMarketUploaderServer photoMarketUploaderServer=new PhotoMarketUploaderServer(actor);
+//        photoMarketUploaderServer.uploadPhotoMarket();
+        UploadToAlbumMarket uploadToAlbumMarket = new UploadToAlbumMarket(actor);
+        uploadToAlbumMarket.uploadToAlbum();
 
     }
 }

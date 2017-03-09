@@ -10,7 +10,6 @@ import com.vk.api.sdk.httpclient.HttpTransportClient;
 import com.vk.api.sdk.objects.photos.Photo;
 import com.vk.api.sdk.objects.photos.responses.GetMarketUploadServerResponse;
 import com.vk.api.sdk.objects.photos.responses.MarketUploadResponse;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
