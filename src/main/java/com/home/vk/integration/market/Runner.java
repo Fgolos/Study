@@ -8,8 +8,10 @@ import com.vk.api.sdk.objects.wall.responses.GetResponse;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 import java.net.URISyntaxException;
-import java.nio.file.Paths;
+import java.nio.file.*;
+import java.util.Iterator;
 import java.util.List;
 //9beb757ca900b576595739d9b36d3a4774e03cfc4c534b336766d309323639db67a899c128e420652a9e0 рабочий токен
 //d98a1355ddc5966a72c7c7453d873526dda3460e8ca7b8783fffa65587cabaf729f76864d4b7e4ef84150
@@ -22,6 +24,7 @@ public class Runner {
         int id = 42298701;
         String token = "9beb757ca900b576595739d9b36d3a4774e03cfc4c534b336766d309323639db67a899c128e420652a9e0";
         UserActor actor = new UserActor(id, token);
+
         //загрузка фото
 //        PhotoUploader photoUploader = new PhotoUploader(actor);
 //        photoUploader.uploadPhoto("C:\\Users\\Fgolo\\Pictures\\Для мамы\\3.jpg");
@@ -66,9 +69,25 @@ public class Runner {
 //        addAlbumMarket.addAlbumMarket();
 //        PhotoMarketUploaderServer photoMarketUploaderServer=new PhotoMarketUploaderServer(actor);
 //        photoMarketUploaderServer.uploadPhotoMarket();
-        UploadToAlbumMarket uploadToAlbumMarket = new UploadToAlbumMarket(actor);
-        uploadToAlbumMarket.uploadToAlbum();
+//
 
+        AllFiles allFiles = new AllFiles();
+
+        for (int i = 0; i < allFiles.files().size(); i++) {
+            UploadToAlbumMarket uploadToAlbumMarket = new UploadToAlbumMarket(actor, (Path) allFiles.files().get(i));
+            Path currentFile = allFiles.files().get(i);
+            File file = currentFile.toFile();
+            String fileName = file.getName();
+            if (fileName.endsWith(".jpg")) {
+                uploadToAlbumMarket.uploadToAlbum();
+                System.out.println(currentFile);
+
+            } else System.out.println("not jpg");
+//        File file = new File("C:\\Users\\Fgolo\\Pictures\\Для мамы\\3.jpg");
+//        UploadToAlbumMarket uploadToAlbumMarket = new UploadToAlbumMarket(actor, file);
+//        uploadToAlbumMarket.uploadToAlbum();
+        }
     }
 }
+
 
