@@ -72,7 +72,6 @@ public class Runner {
 //
 
         AllFiles allFiles = new AllFiles();
-
         for (int i = 0; i < allFiles.files().size(); i++) {
             UploadToAlbumMarket uploadToAlbumMarket = new UploadToAlbumMarket(actor, (Path) allFiles.files().get(i));
             Path currentFile = allFiles.files().get(i);
@@ -81,7 +80,6 @@ public class Runner {
             if (fileName.endsWith(".jpg")) {
                 uploadToAlbumMarket.uploadToAlbum();
                 System.out.println(currentFile);
-
             } else System.out.println("not jpg");
 //        File file = new File("C:\\Users\\Fgolo\\Pictures\\Для мамы\\3.jpg");
 //        UploadToAlbumMarket uploadToAlbumMarket = new UploadToAlbumMarket(actor, file);

@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
  */
 public class AllFiles {
     public List<Path> files() throws IOException {
-        List<Path> collect = Files.walk(Paths.get("C:\\Users\\Fgolo\\Pictures\\Для мамы"))
+        List<Path> collect = Files.walk(Paths.get("C:\\Users\\Fgolo\\Pictures\\Saved Pictures"))
                 .filter(Files::isRegularFile)
                 .collect(Collectors.toList());
         return collect;
