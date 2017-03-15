@@ -3,11 +3,12 @@ package com.home.web;
 import com.google.common.io.Resources;
 import com.home.web.resources.TimeEndpoint;
 import io.dropwizard.Application;
+import io.dropwizard.Configuration;
 import io.dropwizard.setup.Environment;
 
-public class Fapplication extends Application<Fconfiguration> {
+public class Fapplication extends Application<Configuration> {
   @Override
-  public void run(final Fconfiguration fconfiguration, final Environment environment)
+  public void run(final Configuration configuration, final Environment environment)
   throws Exception {
     environment.jersey().register(new TimeEndpoint());
   }
