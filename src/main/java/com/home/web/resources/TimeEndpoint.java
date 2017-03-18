@@ -8,6 +8,6 @@ public class TimeEndpoint {
   @Path("/text")
   @GET
   public String text() {
-    return "Hello it is text" + System.currentTimeMillis();
+    return "Hello it is text " + System.currentTimeMillis();
   }
 }
