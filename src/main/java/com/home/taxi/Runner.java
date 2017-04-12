@@ -15,8 +15,10 @@ public class Runner {
 
         }
         System.out.println("====================================================");
-
-        System.out.println(newTaxiPool.minDistanse(hataButa));
+        System.out.println(newTaxiPool.coast(hataButa));
+        TaxiAccount closestTaxi = newTaxiPool.minDistanse(hataButa);
+        closestTaxi.servePassanger(hataButa);
+        System.out.println(closestTaxi);
 
 
     }

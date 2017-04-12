@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class TaxiAccount {
     int id;
-    int balance;
+    double balance;
     Gpscoord gps;
     ArrayList<Passanger> history;
 
@@ -30,7 +30,7 @@ public class TaxiAccount {
         return id;
     }
 
-    public int getBalance() {
+    public double getBalance() {
         return balance;
     }
 
@@ -42,8 +42,23 @@ public class TaxiAccount {
         return history;
     }
 
-    public void servePassanger(Passanger name, int coast) {
-        this.balance = balance + coast;
+    public double coast(Passanger passanger) {
+        double distance = distance(passanger) * 10;
+        return distance;
+    }
+
+    private double distance(Passanger passanger) {
+        int xPasanger = passanger.getGps().getX();
+        int yPasanger = passanger.getGps().getY();
+        int xTaxi = getGps().getX();
+        int yTaxi = getGps().getY();
+        double res = Math.sqrt(Math.pow((xTaxi - xPasanger), 2) + (Math.pow((yTaxi - yPasanger), 2)));
+        return res;
+    }
+
+
+    public void servePassanger(Passanger name) {
+        this.balance = balance + coast(name);
         this.gps = name.gps;
         this.history.add(name);
 

@@ -26,6 +26,13 @@ public class TaxiPool {
         return allAccounts;
     }
 
+    public double coast(Passanger passanger) {
+        double distance = distance(passanger, minDistanse(passanger)) * 10;
+        return distance;
+
+
+    }
+
     public double distance(Passanger name, TaxiAccount id) {
         int xPasanger = name.getGps().getX();
         int yPasanger = name.getGps().getY();
@@ -37,6 +44,7 @@ public class TaxiPool {
 
     public TaxiAccount minDistanse(Passanger passanger) {
         TaxiAccount closestTaxi = allAccounts.get(0);
+
         for (int i = 0; i < allAccounts.size(); i++) {
             TaxiAccount currentTaxi = allAccounts.get(i);
             double currentDistance = distance(passanger, currentTaxi);
