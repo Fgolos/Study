@@ -1,5 +1,6 @@
 import com.home.clock.Clock;
 import org.junit.Test;
+import static junit.framework.Assert.*;
 
 
 /**
@@ -10,6 +11,6 @@ public class ClockTest {
     public void addSecondsWorksCorrectly() {
         Clock clock = new Clock();
     }
-
+assertEquals()
 
 }
