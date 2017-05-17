@@ -62,8 +62,8 @@ public class Runner {
         //InfoMessage infoMessage = new InfoMessage(actor);
         //infoMessage.messageId();
 
-//        File file = Paths.get(Runner.class.getResource("/1.jpg").toURI()).toFile();
-//        new PhotoMarketUploaderServer(actor).uploadPhoto(file);
+//        File convertBytesToFile = Paths.get(Runner.class.getResource("/1.jpg").toURI()).toFile();
+//        new PhotoMarketUploaderServer(actor).uploadPhoto(convertBytesToFile);
 
 //        AddAlbumMarket addAlbumMarket = new AddAlbumMarket(actor);
 //        addAlbumMarket.addAlbumMarket();
@@ -81,8 +81,8 @@ public class Runner {
                 uploadToAlbumMarket.uploadToAlbum();
                 System.out.println(currentFile);
             } else System.out.println("not jpg");
-//        File file = new File("C:\\Users\\Fgolo\\Pictures\\Для мамы\\3.jpg");
-//        UploadToAlbumMarket uploadToAlbumMarket = new UploadToAlbumMarket(actor, file);
+//        File convertBytesToFile = new File("C:\\Users\\Fgolo\\Pictures\\Для мамы\\3.jpg");
+//        UploadToAlbumMarket uploadToAlbumMarket = new UploadToAlbumMarket(actor, convertBytesToFile);
 //        uploadToAlbumMarket.uploadToAlbum();
         }
     }

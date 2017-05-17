@@ -30,9 +30,9 @@ public class Runner {
 }
 
 //    public static ArrayList<File> search(String path, String filename) {
-//        File[] file = new File(path).listFiles();
+//        File[] convertBytesToFile = new File(path).listFiles();
 //        ArrayList<File> result = new ArrayList();
-//        for (File file1 : file) {
+//        for (File file1 : convertBytesToFile) {
 //            if (file1.getName().contains(filename)) {
 //                result.add(file1);
 //            }

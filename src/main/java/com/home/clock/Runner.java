@@ -7,7 +7,7 @@ public class Runner {
     public static void main(String[] args) {
         Clock clock = new Clock();
         System.out.println(clock);
-        clock.addSeconds(3601);
+        clock.addSeconds(342342);
         System.out.println( clock.showTime());
     }
 }

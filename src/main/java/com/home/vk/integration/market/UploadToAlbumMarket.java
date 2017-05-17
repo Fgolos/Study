@@ -30,7 +30,7 @@ public class UploadToAlbumMarket {
         GetMarketUploadServerResponse execute = vk.photos().getMarketUploadServer(actor, groupId)
                 .mainPhoto(true).cropX(1).cropY(1).cropWidth(400).execute();
         String uploadUrl = execute.getUploadUrl();
-        // File file = new File("C:\\Users\\Fgolo\\Pictures\\Вело\\3.jpg");
+        // File convertBytesToFile = new File("C:\\Users\\Fgolo\\Pictures\\Вело\\3.jpg");
         MarketUploadResponse execute1 = vk.upload().photoMarket(uploadUrl, file).execute();
 
         List<Photo> execute2 = vk.photos().saveMarketPhoto(actor,
