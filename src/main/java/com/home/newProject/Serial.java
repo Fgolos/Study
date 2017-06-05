@@ -24,10 +24,10 @@ public class Serial {
         objectOutputStream.close();
     }
 
-    public serial.User retriveFromFile() throws IOException, ClassNotFoundException {
+    public User retriveFromFile() throws IOException, ClassNotFoundException {
         FileInputStream fileInputStream = new FileInputStream(this.fileName);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-        serial.User user = (serial.User) objectInputStream.readObject();
+        User user = (User) objectInputStream.readObject();
         return user;
     }
 }

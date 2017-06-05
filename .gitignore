@@ -16,3 +16,4 @@ data/kafka/
 data/zookeeper/
 *.log
 data.csv
+*.out

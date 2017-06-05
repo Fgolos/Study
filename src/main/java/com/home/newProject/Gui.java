@@ -23,8 +23,6 @@ public class Gui extends Application {
 
     public static void main(String[] args) {
         launch(args);
-
-
     }
 
     public void start(Stage myStage) {
@@ -58,7 +56,7 @@ public class Gui extends Application {
             @Override
             public void handle(ActionEvent event) {
                 try {
-                    serial.User x = serial.retriveFromFile();
+                    User x = serial.retriveFromFile();
                     System.out.println(x);
                 } catch (IOException e) {
                     e.printStackTrace();
