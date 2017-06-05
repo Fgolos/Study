@@ -1,8 +1,6 @@
 package com.home.newProject;
 
 import javafx.application.Application;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -10,8 +8,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
-
-import java.io.IOException;
 
 
 /**
@@ -39,32 +35,12 @@ public class Gui extends Application {
         Button uploadButton = new Button("Save");
         Button downloadButton = new Button("Show");
 
-        uploadButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                User user = new User(textFieldName.getText(), textFieldSurname.getText());
+        SaveUserEventHandler saveUserEventHandler = new SaveUserEventHandler(serial, textFieldName, textFieldSurname);
+        uploadButton.setOnAction(saveUserEventHandler);
 
-                try {
-                    serial.writeUserToFile(user);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        ShowUserEventHanler showUserEventHanler = new ShowUserEventHanler(serial);
+        downloadButton.setOnAction(showUserEventHanler);
 
-            }
-        });
-        downloadButton.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                try {
-                    User x = serial.retriveFromFile();
-                    System.out.println(x);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
 
         flowPane.getChildren().addAll(labelName, textFieldName, labelSurname, textFieldSurname, uploadButton, downloadButton);
         myStage.show();
