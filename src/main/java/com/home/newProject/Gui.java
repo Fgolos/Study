@@ -1,6 +1,5 @@
 package com.home.newProject;
 
-import com.google.common.io.Files;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -12,7 +11,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 
@@ -53,19 +51,20 @@ public class Gui extends Application {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                downloadButton.setOnAction(new EventHandler<ActionEvent>() {
-                    @Override
-                    public void handle(ActionEvent event) {
-                        try {
-                            serial.User x = serial.retriveFromFile();
-                            System.out.println(x);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        } catch (ClassNotFoundException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+
+            }
+        });
+        downloadButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                try {
+                    serial.User x = serial.retriveFromFile();
+                    System.out.println(x);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
             }
         });
 

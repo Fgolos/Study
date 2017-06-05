@@ -1,15 +1,7 @@
 package com.home.newProject;
 
 
-import org.apache.commons.io.output.AppendableOutputStream;
-
 import java.io.*;
-import java.nio.channels.FileChannel;
-import java.nio.file.Files;
-import java.nio.file.OpenOption;
-import java.nio.file.Path;
-
-import static com.google.common.io.FileWriteMode.APPEND;
 
 
 /**
@@ -24,7 +16,7 @@ public class Serial {
     }
 
 
-    public void writeUserToFile(serial.User user) throws IOException {
+    public void writeUserToFile(User user) throws IOException {
         FileOutputStream fileOutputStream = new FileOutputStream(fileName);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
         objectOutputStream.writeObject(user);
