@@ -1,5 +1,6 @@
 package com.home.newProject;
 
+import com.google.common.io.Files;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -11,22 +12,24 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.FlowPane;
 import javafx.stage.Stage;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.Serializable;
+
 
 /**
  * Created by FDR on 27.05.2017.
  */
-public class Gui extends Application implements Serializable {
+public class Gui extends Application {
+    Serial serial = new Serial("test.out");
 
 
     public static void main(String[] args) {
         launch(args);
 
+
     }
 
     public void start(Stage myStage) {
-        Serial serial = new Serial("test.out");
         myStage.setTitle("Project");
         FlowPane flowPane = new FlowPane(10, 10);
         flowPane.setAlignment(Pos.CENTER);
@@ -37,8 +40,8 @@ public class Gui extends Application implements Serializable {
         TextField textFieldName = new TextField("");
         Label labelSurname = new Label("Введите Фамилию");
         TextField textFieldSurname = new TextField("");
-        Button uploadButton = new Button("Upload");
-        Button downloadButton = new Button("Download");
+        Button uploadButton = new Button("Save");
+        Button downloadButton = new Button("Show");
 
         uploadButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -49,11 +52,13 @@ public class Gui extends Application implements Serializable {
                     serial.writeUserToFile(user);
                 } catch (IOException e) {
                     e.printStackTrace();
-                }downloadButton.setOnAction(new EventHandler<ActionEvent>() {
+                }
+                downloadButton.setOnAction(new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent event) {
                         try {
-                            System.out.println(serial.retriveFromFile());
+                            serial.User x = serial.retriveFromFile();
+                            System.out.println(x);
                         } catch (IOException e) {
                             e.printStackTrace();
                         } catch (ClassNotFoundException e) {
