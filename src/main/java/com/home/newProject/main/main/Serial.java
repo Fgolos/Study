@@ -1,4 +1,4 @@
-package com.home.newProject;
+package com.home.newProject.main.main;
 
 
 import java.io.*;
@@ -16,19 +16,19 @@ public class Serial {
     }
 
 
-    public void writeUserToFile(User user) throws IOException {
+    public void writeUserToFile(Users users) throws IOException {
         FileOutputStream fileOutputStream = new FileOutputStream(fileName);
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(fileOutputStream);
-        objectOutputStream.writeObject(user);
+        objectOutputStream.writeObject(users);
         objectOutputStream.flush();
         objectOutputStream.close();
     }
 
-    public User retriveFromFile() throws IOException, ClassNotFoundException {
+    public Users retriveFromFile() throws IOException, ClassNotFoundException {
         FileInputStream fileInputStream = new FileInputStream(this.fileName);
         ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-        User user = (User) objectInputStream.readObject();
-        return user;
+        Users users = (Users) objectInputStream.readObject();
+        return users;
     }
 }
 
