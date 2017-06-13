@@ -65,6 +65,7 @@ public class Gui extends Application {
 
 
         }
+        System.out.println(users.users.size());
         Stage stage = new Stage();
         stage.setTitle("Add User");
         GridPane gridPane1AddUser = new GridPane();
@@ -89,8 +90,15 @@ public class Gui extends Application {
             @Override
             public void handle(ActionEvent event) {
                 User user = new User(Integer.parseInt(textFieldID.getText()), textFieldNAME.getText(), textFieldSURNAME.getText());
-                users.addUser(user);
-                sc
+                Users users1 = users;
+                users1.addUser(user);
+                try {
+                    serial.writeUserToFile(users1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(users.users.size());
+                stage.close();
 
 
             }

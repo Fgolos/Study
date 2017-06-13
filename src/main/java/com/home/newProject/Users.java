@@ -27,9 +27,9 @@ public class Users implements Serializable {
         System.out.println(users);
 
 
-        Serial serial = new Serial("test.out");
-        serial.writeUserToFile(users);
-        System.out.println(serial.retriveFromFile());
+//        Serial serial = new Serial("test.out");
+//        serial.writeUserToFile(users);
+//        System.out.println(serial.retriveFromFile());
     }
 
     @Override
