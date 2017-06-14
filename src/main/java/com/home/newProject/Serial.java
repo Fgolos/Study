@@ -2,6 +2,7 @@ package com.home.newProject;
 
 
 import java.io.*;
+import java.nio.file.Files;
 import java.util.ArrayList;
 
 
@@ -14,6 +15,7 @@ public class Serial {
 
     public Serial(String fileName) {
         this.fileName = fileName;
+
     }
 
 
@@ -26,10 +28,21 @@ public class Serial {
     }
 
     public Users retriveFromFile() throws IOException, ClassNotFoundException {
-        FileInputStream fileInputStream = new FileInputStream(this.fileName);
-        ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-        Users users = (Users) objectInputStream.readObject();
-        return users;
+        File file = new File("C:\\projects\\Study" + fileName);
+        boolean exists = file.exists();
+        if (exists == true) {
+            FileInputStream fileInputStream = new FileInputStream(this.fileName);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
+            Users users = (Users) objectInputStream.readObject();
+            return users;
+        } else {
+            File file1 = new File("C:\\projects\\Study" + fileName);
+            file1.createNewFile();
+            Users users = new Users();
+            writeUserToFile(users);
+            return users;
+        }
+
     }
 }
 
