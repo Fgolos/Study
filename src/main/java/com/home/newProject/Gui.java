@@ -29,6 +29,57 @@ public class Gui extends Application {
     }
 
     public void start(Stage myStage) throws IOException, ClassNotFoundException {
+        Users users = serial.retriveFromFile();
+        Gui gui = new Gui();
+        gui.createMainScene(myStage);
+
+        System.out.println(users.users.size());
+        Stage stage = new Stage();
+        stage.setTitle("Add User");
+        GridPane gridPane1AddUser = new GridPane();
+        Scene scene1 = new Scene(gridPane1AddUser, 200, 200);
+        stage.setScene(scene1);
+        stage.show();
+
+        TextField textFieldID = new TextField("");
+        TextField textFieldNAME = new TextField("");
+        TextField textFieldSURNAME = new TextField("");
+        Button saveButton = new Button("Save");
+        gridPane1AddUser.setAlignment(CENTER);
+        gridPane1AddUser.add(new Label("ID "), 0, 0);
+        gridPane1AddUser.add(new Label("Name "), 0, 1);
+        gridPane1AddUser.add(new Label("Surname "), 0, 2);
+        gridPane1AddUser.add(textFieldID, 1, 0);
+        gridPane1AddUser.add(textFieldNAME, 1, 1);
+        gridPane1AddUser.add(textFieldSURNAME, 1, 2);
+        gridPane1AddUser.add(saveButton, 1, 3);
+
+        saveButton.setOnAction(new javafx.event.EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                User user = new User(Integer.parseInt(textFieldID.getText()), textFieldNAME.getText(), textFieldSURNAME.getText());
+                Users users1 = users;
+                users1.addUser(user);
+                try {
+                    serial.writeUserToFile(users1);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                System.out.println(users.users.size());
+                myStage.close();
+                stage.close();
+                try {
+                    gui.createMainScene(myStage);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+
+    public void createMainScene(Stage myStage) throws IOException, ClassNotFoundException {
         myStage.setTitle("Project");
         GridPane gridPane = new GridPane();
         gridPane.setGridLinesVisible(true);
@@ -63,47 +114,6 @@ public class Gui extends Application {
             String surname = users.users.get(i).surname;
             gridPane.add(new Label(surname), 2, i + 1);
 
-
         }
-        System.out.println(users.users.size());
-        Stage stage = new Stage();
-        stage.setTitle("Add User");
-        GridPane gridPane1AddUser = new GridPane();
-        Scene scene1 = new Scene(gridPane1AddUser, 200, 200);
-        stage.setScene(scene1);
-        stage.show();
-
-        TextField textFieldID = new TextField("");
-        TextField textFieldNAME = new TextField("");
-        TextField textFieldSURNAME = new TextField("");
-        Button saveButton = new Button("Save");
-        gridPane1AddUser.setAlignment(CENTER);
-        gridPane1AddUser.add(new Label("ID "), 0, 0);
-        gridPane1AddUser.add(new Label("Name "), 0, 1);
-        gridPane1AddUser.add(new Label("Surname "), 0, 2);
-        gridPane1AddUser.add(textFieldID, 1, 0);
-        gridPane1AddUser.add(textFieldNAME, 1, 1);
-        gridPane1AddUser.add(textFieldSURNAME, 1, 2);
-        gridPane1AddUser.add(saveButton, 1, 3);
-
-        saveButton.setOnAction(new javafx.event.EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                User user = new User(Integer.parseInt(textFieldID.getText()), textFieldNAME.getText(), textFieldSURNAME.getText());
-                Users users1 = users;
-                users1.addUser(user);
-                try {
-                    serial.writeUserToFile(users1);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                System.out.println(users.users.size());
-                stage.close();
-
-
-            }
-        });
-
-
     }
 }
