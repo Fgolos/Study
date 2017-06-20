@@ -2,11 +2,13 @@ package com.home.newProject;
 
 import javafx.application.Application;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -29,11 +31,69 @@ public class Gui extends Application {
     }
 
     public void start(Stage myStage) throws IOException, ClassNotFoundException {
-        Users users = serial.retriveFromFile();
         Gui gui = new Gui();
         gui.createMainScene(myStage);
 
-        System.out.println(users.users.size());
+    }
+
+    public void createMainScene(Stage myStage) throws IOException, ClassNotFoundException {
+        myStage.setTitle("Project");
+        GridPane gridPane = new GridPane();
+
+        gridPane.setGridLinesVisible(true);
+        Scene scene = new Scene(gridPane, 500, 200);
+        myStage.setScene(scene);
+        myStage.show();
+
+
+        Label id = new Label("ID");
+        id.setAlignment(Pos.BASELINE_CENTER);
+        gridPane.add(id, 0, 0);
+        gridPane.add(new Label("Name"), 1, 0);
+        gridPane.add(new Label("Surname"), 2, 0);
+        Button buttonAddUser = new Button("Add User");
+
+
+        ColumnConstraints columnConstraintsID = new ColumnConstraints();
+        columnConstraintsID.setPrefWidth(50);
+        ColumnConstraints columnConstraintsName = new ColumnConstraints();
+        columnConstraintsName.setPrefWidth(250);
+        ColumnConstraints columnConstraintsSurname = new ColumnConstraints();
+        columnConstraintsSurname.setPrefWidth(250);
+        gridPane.getColumnConstraints().addAll(columnConstraintsID, columnConstraintsName, columnConstraintsSurname);
+
+        Users users = serial.retriveFromFile();
+        gridPane.add(buttonAddUser, 2, users.users.size() + 1);
+        buttonAddUser.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                Gui gui = new Gui();
+                try {
+                    gui.createAddUserScene(myStage);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
+
+            }
+        });
+
+        for (int i = 0; i < users.users.size(); i++) {
+            String id1 = String.valueOf(users.users.get(i).id);
+            gridPane.add(new Label(id1), 0, i + 1);
+            String name = users.users.get(i).name;
+            gridPane.add(new Label(name), 1, i + 1);
+            String surname = users.users.get(i).surname;
+            gridPane.add(new Label(surname), 2, i + 1);
+
+        }
+    }
+
+    public void createAddUserScene(Stage myStage) throws IOException, ClassNotFoundException {
+        Users users = serial.retriveFromFile();
+        Gui gui = new Gui();
+
         Stage stage = new Stage();
         stage.setTitle("Add User");
         GridPane gridPane1AddUser = new GridPane();
@@ -77,43 +137,6 @@ public class Gui extends Application {
                 }
             }
         });
-    }
 
-    public void createMainScene(Stage myStage) throws IOException, ClassNotFoundException {
-        myStage.setTitle("Project");
-        GridPane gridPane = new GridPane();
-        gridPane.setGridLinesVisible(true);
-        Scene scene = new Scene(gridPane, 500, 200);
-        myStage.setScene(scene);
-        myStage.show();
-
-
-        Label id = new Label("ID");
-        id.setAlignment(Pos.BASELINE_CENTER);
-        gridPane.add(id, 0, 0);
-        gridPane.add(new Label("Name"), 1, 0);
-        gridPane.add(new Label("Surname"), 2, 0);
-        Button buttonAddUser = new Button("Add User");
-
-
-        ColumnConstraints columnConstraintsID = new ColumnConstraints();
-        columnConstraintsID.setPrefWidth(50);
-        ColumnConstraints columnConstraintsName = new ColumnConstraints();
-        columnConstraintsName.setPrefWidth(250);
-        ColumnConstraints columnConstraintsSurname = new ColumnConstraints();
-        columnConstraintsSurname.setPrefWidth(250);
-        gridPane.getColumnConstraints().addAll(columnConstraintsID, columnConstraintsName, columnConstraintsSurname);
-
-        Users users = serial.retriveFromFile();
-
-        for (int i = 0; i < users.users.size(); i++) {
-            String id1 = String.valueOf(users.users.get(i).id);
-            gridPane.add(new Label(id1), 0, i + 1);
-            String name = users.users.get(i).name;
-            gridPane.add(new Label(name), 1, i + 1);
-            String surname = users.users.get(i).surname;
-            gridPane.add(new Label(surname), 2, i + 1);
-
-        }
     }
 }
