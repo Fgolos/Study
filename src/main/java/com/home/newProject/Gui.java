@@ -6,6 +6,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -14,6 +15,7 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import static javafx.geometry.Pos.BASELINE_RIGHT;
 import static javafx.geometry.Pos.CENTER;
@@ -24,10 +26,13 @@ import static javafx.geometry.Pos.CENTER;
  */
 public class Gui extends Application {
     Serial serial = new Serial("test.out");
+    ArrayList<CheckBoxAndUsersID> checkBoxAndUsersIDArrayList = new ArrayList<>();
 
 
     public static void main(String[] args) {
         launch(args);
+
+
     }
 
     public void start(Stage myStage) throws IOException, ClassNotFoundException {
@@ -51,7 +56,9 @@ public class Gui extends Application {
         gridPane.add(id, 0, 0);
         gridPane.add(new Label("Name"), 1, 0);
         gridPane.add(new Label("Surname"), 2, 0);
+        //  CheckBox checkBox = new CheckBox();
         Button buttonAddUser = new Button("Add User");
+        Button buttonDeleteUser = new Button("Delete User");
 
 
         ColumnConstraints columnConstraintsID = new ColumnConstraints();
@@ -60,10 +67,13 @@ public class Gui extends Application {
         columnConstraintsName.setPrefWidth(250);
         ColumnConstraints columnConstraintsSurname = new ColumnConstraints();
         columnConstraintsSurname.setPrefWidth(250);
-        gridPane.getColumnConstraints().addAll(columnConstraintsID, columnConstraintsName, columnConstraintsSurname);
+        ColumnConstraints columnConstraintsCheckBox = new ColumnConstraints();
+        columnConstraintsCheckBox.setPrefWidth(17);
+        gridPane.getColumnConstraints().addAll(columnConstraintsID, columnConstraintsName, columnConstraintsSurname, columnConstraintsCheckBox);
 
         Users users = serial.retriveFromFile();
         gridPane.add(buttonAddUser, 2, users.users.size() + 1);
+        gridPane.add(buttonDeleteUser, 1, users.users.size() + 1);
         buttonAddUser.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
@@ -78,6 +88,24 @@ public class Gui extends Application {
 
             }
         });
+        buttonDeleteUser.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                System.out.println(users.users.size());
+                for (int i = 0; i < checkBoxAndUsersIDArrayList.size(); i++) {
+                    if (checkBoxAndUsersIDArrayList.get(i).checkBox.isSelected()) {
+                        users.removeUserByID(checkBoxAndUsersIDArrayList.get(i).id);
+                    }
+                }
+                System.out.println(users.users.size());
+                try {
+                    serial.writeUserToFile(users);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        });
 
         for (int i = 0; i < users.users.size(); i++) {
             String id1 = String.valueOf(users.users.get(i).id);
@@ -86,8 +114,12 @@ public class Gui extends Application {
             gridPane.add(new Label(name), 1, i + 1);
             String surname = users.users.get(i).surname;
             gridPane.add(new Label(surname), 2, i + 1);
-
+            CheckBox checkBox = new CheckBox();
+            gridPane.add(checkBox, 3, i + 1);
+            CheckBoxAndUsersID checkBoxAndUsersID = new CheckBoxAndUsersID(checkBox, Integer.parseInt(id1));
+            checkBoxAndUsersIDArrayList.add(checkBoxAndUsersID);
         }
+
     }
 
     public void createAddUserScene(Stage myStage) throws IOException, ClassNotFoundException {
