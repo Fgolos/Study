@@ -91,16 +91,25 @@ public class Gui extends Application {
         buttonDeleteUser.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                System.out.println(users.users.size());
+                Users users1 = new Users();
                 for (int i = 0; i < checkBoxAndUsersIDArrayList.size(); i++) {
+
                     if (checkBoxAndUsersIDArrayList.get(i).checkBox.isSelected()) {
+                        System.out.println(checkBoxAndUsersIDArrayList.get(i).id);
                         users.removeUserByID(checkBoxAndUsersIDArrayList.get(i).id);
-                    }
+
+                    } else users1.addUser(users.users.get(i));
                 }
-                System.out.println(users.users.size());
                 try {
-                    serial.writeUserToFile(users);
+                    serial.writeUserToFile(users1);
                 } catch (IOException e) {
+                    e.printStackTrace();
+                }myStage.close();
+                try {
+                    createMainScene(myStage);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             }
