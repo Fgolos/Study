@@ -2,60 +2,57 @@ package com.home.demo;
 
 import com.home.newProject.User;
 import javafx.application.Application;
-import javafx.beans.value.ObservableValue;
-import javafx.geometry.Pos;
+import javafx.geometry.Insets;
+import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.FlowPane;
+import javafx.scene.control.TableView;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.util.Callback;
-
 import java.util.ArrayList;
 
-/**
- * Created by FDR on 22.06.2017.
- */
+
 public class ListViewDemo extends Application {
 
-
+  TableView table = new TableView();
     public static void main(String[] args) {
         launch(args);
     }
 
-    public void start(Stage myStage) {
-        ArrayList<User> users = new ArrayList<>();
+    public void start(Stage stage) {
+      Scene scene = new Scene(new Group());
+      stage.setTitle("Table View Sample");
+      stage.setWidth(300);
+      stage.setHeight(500);
 
-        User user = new User(1, "name1", "surname1");
-        User user2 = new User(2, "name2", "surname2");
+      table.setEditable(true);
 
-        users.add(user);
-        users.add(user2);
-
-        myStage.setTitle("ListView Demo");
-        FlowPane flowPane = new FlowPane(10, 10);
-        flowPane.setAlignment(Pos.CENTER);
-        Scene scene = new Scene(flowPane, 200, 120);
-        myStage.setScene(scene);
-
-        javafx.scene.control.TableView tableView = new javafx.scene.control.TableView();
 
         TableColumn tableColumnID = new TableColumn("ID");
         TableColumn tableColumnNAME = new TableColumn("Name");
         TableColumn tableColumnSURNAME = new TableColumn("Surname");
-        tableColumnID.setCellValueFactory(new PropertyValueFactory<User, String>("ID"));
 
 
-        tableView.getColumns().addAll(tableColumnID, tableColumnNAME, tableColumnSURNAME);
-        tableView.getItems().addAll();
+      table.getColumns().addAll(tableColumnID, tableColumnNAME, tableColumnSURNAME);
+
+      final VBox vbox = new VBox();
+      vbox.setSpacing(5);
+      vbox.setPadding(new Insets(10, 0, 0, 10));
+      vbox.getChildren().addAll(table);
 
 
-//        ObservableList<User> computerTypes = FXCollections.observableArrayList(user, user2);
-//        ListView<User> lvComputers = new ListView<>(computerTypes);
-//        lvComputers.setPrefSize(200, 120);
-//        MultipleSelectionModel<User> selectionModel = lvComputers.getSelectionModel();
-
-        flowPane.getChildren().addAll(tableView);
-        myStage.show();
+      ((Group) scene.getRoot()).getChildren().addAll(vbox);
+       stage.setScene(scene);
+        stage.show();
     }
+
+  private void users() {
+    ArrayList<User> users = new ArrayList<>();
+
+    User user = new User(1, "name1", "surname1");
+    User user2 = new User(2, "name2", "surname2");
+
+    users.add(user);
+    users.add(user2);
+  }
 }
