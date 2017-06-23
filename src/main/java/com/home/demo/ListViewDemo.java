@@ -2,11 +2,14 @@ package com.home.demo;
 
 import com.home.newProject.User;
 import javafx.application.Application;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import java.util.ArrayList;
@@ -14,26 +17,44 @@ import java.util.ArrayList;
 
 public class ListViewDemo extends Application {
 
-  TableView table = new TableView();
-    public static void main(String[] args) {
+  TableView<Person> table = new TableView<Person>();
+  private final ObservableList<Person> data =
+      FXCollections.observableArrayList(
+          new Person("Jacob", "Smith", "jacob.smith@example.com"),
+          new Person("Isabella", "Johnson", "isabella.johnson@example.com"),
+          new Person("Ethan", "Williams", "ethan.williams@example.com"),
+          new Person("Emma", "Jones", "emma.jones@example.com"),
+          new Person("Michael", "Brown", "michael.brown@example.com")
+      );
+  public static void main(String[] args) {
         launch(args);
     }
 
     public void start(Stage stage) {
       Scene scene = new Scene(new Group());
       stage.setTitle("Table View Sample");
-      stage.setWidth(300);
+      stage.setWidth(450);
       stage.setHeight(500);
 
       table.setEditable(true);
 
+      TableColumn firstNameCol = new TableColumn("First Name");
+      firstNameCol.setMinWidth(100);
+      firstNameCol.setCellValueFactory(
+          new PropertyValueFactory<Person, String>("firstName"));
 
-        TableColumn tableColumnID = new TableColumn("ID");
-        TableColumn tableColumnNAME = new TableColumn("Name");
-        TableColumn tableColumnSURNAME = new TableColumn("Surname");
+      TableColumn lastNameCol = new TableColumn("Last Name");
+      lastNameCol.setMinWidth(100);
+      lastNameCol.setCellValueFactory(
+          new PropertyValueFactory<Person, String>("lastName"));
 
+      TableColumn emailCol = new TableColumn("Email");
+      emailCol.setMinWidth(200);
+      emailCol.setCellValueFactory(
+          new PropertyValueFactory<Person, String>("email"));
 
-      table.getColumns().addAll(tableColumnID, tableColumnNAME, tableColumnSURNAME);
+      table.setItems(data);
+      table.getColumns().addAll(firstNameCol, lastNameCol, emailCol);
 
       final VBox vbox = new VBox();
       vbox.setSpacing(5);
@@ -42,17 +63,9 @@ public class ListViewDemo extends Application {
 
 
       ((Group) scene.getRoot()).getChildren().addAll(vbox);
-       stage.setScene(scene);
-        stage.show();
+
+      stage.setScene(scene);
+      stage.show();
     }
 
-  private void users() {
-    ArrayList<User> users = new ArrayList<>();
-
-    User user = new User(1, "name1", "surname1");
-    User user2 = new User(2, "name2", "surname2");
-
-    users.add(user);
-    users.add(user2);
-  }
 }
