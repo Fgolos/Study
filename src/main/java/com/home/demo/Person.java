@@ -17,27 +17,21 @@ public class Person  {
     this.email = new SimpleStringProperty(email);
   }
 
-  public String getFirstName() {
-    return firstName.get();
+
+
+  public SimpleStringProperty firstNameProperty() {
+    return firstName;
   }
 
-  public void setFirstName(String fName) {
-    firstName.set(fName);
+
+
+  public SimpleStringProperty lastNameProperty() {
+    return lastName;
   }
 
-  public String getLastName() {
-    return lastName.get();
-  }
 
-  public void setLastName(String fName) {
-    lastName.set(fName);
-  }
 
-  public String getEmail() {
-    return email.get();
-  }
-
-  public void setEmail(String fName) {
-    email.set(fName);
+  public SimpleStringProperty emailProperty() {
+    return email;
   }
 }
