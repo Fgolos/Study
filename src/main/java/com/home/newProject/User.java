@@ -26,6 +26,18 @@ public class User implements Serializable {
         return result;
     }
 
+    public Integer getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
     Integer id;
     String name;
     String surname;
