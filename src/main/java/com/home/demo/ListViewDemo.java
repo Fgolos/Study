@@ -26,6 +26,7 @@ public class ListViewDemo extends Application {
     Users users;
     Serial serial;
     TableView<User> userTableView;
+    ObservableList<User> userObservableList;
 
     public static void main(String[] args) {
         launch(args);
@@ -57,8 +58,9 @@ public class ListViewDemo extends Application {
 
         userTableView.setItems(getUser());
         userTableView.getColumns().addAll(idColumn, nameColumn, surnameColumn);
-        Button refreshButton = new Button("Refresh");
+
         Button button = new Button("Add User");
+        Button buttonDeleteUser = new Button("Delete user");
 
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
@@ -66,10 +68,13 @@ public class ListViewDemo extends Application {
                 createSceneAddUser();
             }
         });
-        refreshButton.setOnAction(new EventHandler<ActionEvent>() {
+
+        buttonDeleteUser.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-                userTableView.refresh();
+                int selectedItems = userTableView.getSelectionModel().getFocusedIndex();
+                userObservableList.remove(selectedItems);
+
             }
         });
 
@@ -77,7 +82,7 @@ public class ListViewDemo extends Application {
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(userTableView, button, refreshButton);
+        vbox.getChildren().addAll(userTableView, button, buttonDeleteUser);
 
 
         ((Group) scene.getRoot()).getChildren().addAll(vbox);
@@ -89,12 +94,11 @@ public class ListViewDemo extends Application {
     public ObservableList<User> getUser() throws IOException, ClassNotFoundException {
         this.serial = new Serial("test.out");
         this.users = serial.retriveFromFile();
-        ObservableList<User> userObservableList = FXCollections.observableArrayList();
+        this.userObservableList = FXCollections.observableArrayList();
         for (int i = 0; i < serial.retriveFromFile().users.size(); i++) {
             userObservableList.add(serial.retriveFromFile().users.get(i));
         }
         return userObservableList;
-
     }
 
     public void createSceneAddUser() {
@@ -125,6 +129,7 @@ public class ListViewDemo extends Application {
                     e.printStackTrace();
                 }
                 stageAddUser.close();
+                userObservableList.add(user);
             }
         });
 
