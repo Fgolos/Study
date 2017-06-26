@@ -25,6 +25,7 @@ import java.io.IOException;
 public class ListViewDemo extends Application {
     Users users;
     Serial serial;
+    TableView<User> userTableView;
 
     public static void main(String[] args) {
         launch(args);
@@ -34,7 +35,7 @@ public class ListViewDemo extends Application {
     public void start(Stage stage) throws IOException, ClassNotFoundException {
 
 
-        TableView<User> userTableView = new TableView<>();
+        userTableView = new TableView<>();
 
 
         Scene scene = new Scene(new Group());
@@ -56,12 +57,19 @@ public class ListViewDemo extends Application {
 
         userTableView.setItems(getUser());
         userTableView.getColumns().addAll(idColumn, nameColumn, surnameColumn);
-
+        Button refreshButton = new Button("Refresh");
         Button button = new Button("Add User");
+
         button.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
                 createSceneAddUser();
+            }
+        });
+        refreshButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                userTableView.refresh();
             }
         });
 
@@ -69,7 +77,7 @@ public class ListViewDemo extends Application {
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(userTableView, button);
+        vbox.getChildren().addAll(userTableView, button, refreshButton);
 
 
         ((Group) scene.getRoot()).getChildren().addAll(vbox);
@@ -80,7 +88,7 @@ public class ListViewDemo extends Application {
 
     public ObservableList<User> getUser() throws IOException, ClassNotFoundException {
         this.serial = new Serial("test.out");
-
+        this.users = serial.retriveFromFile();
         ObservableList<User> userObservableList = FXCollections.observableArrayList();
         for (int i = 0; i < serial.retriveFromFile().users.size(); i++) {
             userObservableList.add(serial.retriveFromFile().users.get(i));
@@ -117,11 +125,8 @@ public class ListViewDemo extends Application {
                     e.printStackTrace();
                 }
                 stageAddUser.close();
-
-
             }
         });
-
 
         vBox.getChildren().addAll(textFieldID, textFieldNAME, textFieldSURNAME, save);
 
