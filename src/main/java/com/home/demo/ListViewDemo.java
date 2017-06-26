@@ -6,29 +6,34 @@ import com.home.newProject.Users;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 
 public class ListViewDemo extends Application {
+    Users users;
     Serial serial;
-
 
     public static void main(String[] args) {
         launch(args);
     }
 
+
     public void start(Stage stage) throws IOException, ClassNotFoundException {
-        Serial serial = new Serial("test.out");
+
+
         TableView<User> userTableView = new TableView<>();
 
 
@@ -52,11 +57,19 @@ public class ListViewDemo extends Application {
         userTableView.setItems(getUser());
         userTableView.getColumns().addAll(idColumn, nameColumn, surnameColumn);
 
+        Button button = new Button("Add User");
+        button.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent event) {
+                createSceneAddUser();
+            }
+        });
+
 
         final VBox vbox = new VBox();
         vbox.setSpacing(5);
         vbox.setPadding(new Insets(10, 0, 0, 10));
-        vbox.getChildren().addAll(userTableView);
+        vbox.getChildren().addAll(userTableView, button);
 
 
         ((Group) scene.getRoot()).getChildren().addAll(vbox);
@@ -66,6 +79,7 @@ public class ListViewDemo extends Application {
     }
 
     public ObservableList<User> getUser() throws IOException, ClassNotFoundException {
+        this.serial = new Serial("test.out");
 
         ObservableList<User> userObservableList = FXCollections.observableArrayList();
         for (int i = 0; i < serial.retriveFromFile().users.size(); i++) {
@@ -73,6 +87,43 @@ public class ListViewDemo extends Application {
         }
         return userObservableList;
 
+    }
+
+    public void createSceneAddUser() {
+        Stage stageAddUser = new Stage();
+        stageAddUser.setTitle("Add User");
+        VBox vBox = new VBox();
+        vBox.alignmentProperty();
+        Scene scene = new Scene(vBox, 200, 200);
+        stageAddUser.setScene(scene);
+        stageAddUser.show();
+
+        TextField textFieldID = new TextField("ID");
+        TextField textFieldNAME = new TextField("Name");
+        TextField textFieldSURNAME = new TextField("Surname");
+
+        Button save = new Button("Save");
+        save.setOnAction(new EventHandler<ActionEvent>() {
+
+
+            @Override
+            public void handle(ActionEvent event) {
+                User user = new User(Integer.parseInt(textFieldID.getText()),
+                        textFieldNAME.getText(), textFieldSURNAME.getText());
+                users.addUser(user);
+                try {
+                    serial.writeUserToFile(users);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                stageAddUser.close();
+
+
+            }
+        });
+
+
+        vBox.getChildren().addAll(textFieldID, textFieldNAME, textFieldSURNAME, save);
 
     }
 

@@ -28,7 +28,7 @@ public class Serial {
     }
 
     public Users retriveFromFile() throws IOException, ClassNotFoundException {
-        File file = new File("C:\\projects\\Study" + fileName);
+        File file = new File(fileName);
         boolean exists = file.exists();
         if (exists == true) {
             FileInputStream fileInputStream = new FileInputStream(this.fileName);
