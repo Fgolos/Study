@@ -20,6 +20,7 @@ import java.io.IOException;
 
 
 public class ListViewDemo extends Application {
+
     Users users;
     Serial serial;
     TableView<User> userTableView;
@@ -72,6 +73,14 @@ public class ListViewDemo extends Application {
             public void handle(ActionEvent event) {
                 int selectedItems = userTableView.getSelectionModel().getFocusedIndex();
                 userObservableList.remove(selectedItems);
+                Integer id = userTableView.getItems().get(selectedItems).getId();
+                System.out.println(id);
+                //users.removeUserByID(id);
+//                try {
+//                    serial.writeUserToFile(users);
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
 
             }
         });
@@ -100,6 +109,7 @@ public class ListViewDemo extends Application {
     }
 
     public void createSceneAddUser() {
+
         Stage stageAddUser = new Stage();
         stageAddUser.setTitle("Add User");
         VBox vBox = new VBox();
@@ -108,7 +118,7 @@ public class ListViewDemo extends Application {
         stageAddUser.setScene(scene);
         stageAddUser.show();
 
-        TextField textFieldID = new TextField("ID");
+
         TextField textFieldNAME = new TextField("Name");
         TextField textFieldSURNAME = new TextField("Surname");
 
@@ -118,8 +128,10 @@ public class ListViewDemo extends Application {
 
             @Override
             public void handle(ActionEvent event) {
-                User user = new User(Integer.parseInt(textFieldID.getText()),
-                        textFieldNAME.getText(), textFieldSURNAME.getText());
+
+                Counter counter = new Counter();
+                Integer id = counter.generateId();
+                User user = new User(id, textFieldNAME.getText(), textFieldSURNAME.getText());
                 users.addUser(user);
                 try {
                     serial.writeUserToFile(users);
@@ -131,7 +143,7 @@ public class ListViewDemo extends Application {
             }
         });
 
-        vBox.getChildren().addAll(textFieldID, textFieldNAME, textFieldSURNAME, save);
+        vBox.getChildren().addAll(textFieldNAME, textFieldSURNAME, save);
 
     }
 

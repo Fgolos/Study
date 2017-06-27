@@ -32,6 +32,10 @@ public class Users implements Serializable {
 //        System.out.println(serial.retriveFromFile());
     }
 
+    public ArrayList<User> getUsers() {
+        return users;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
