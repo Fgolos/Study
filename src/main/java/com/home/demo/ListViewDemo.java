@@ -69,15 +69,18 @@ public class ListViewDemo extends Application {
             public void handle(ActionEvent event) {
 
                 int selectedItems = userTableView.getSelectionModel().getFocusedIndex();
-                Integer id = (userTableView.getItems().get(selectedItems).getId());
+                int id = (userTableView.getItems().get(selectedItems).getId());
                 userObservableList.remove(selectedItems);
-                System.out.println(id + "текущий ID");
-                users.removeUserByID(id + 1);
+               // System.out.println(id + "текущий ID");
+             //   System.out.println(users.users.size() + "до сохранения");
+                users.users.remove(id);
+              //  System.out.println(users.users.size() + "после удаления по ID");
                 try {
                     serial.writeUserToFile(users);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                //System.out.println(users.users.size()+"после сохранения в файл");
 
 
             }
