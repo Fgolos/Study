@@ -11,10 +11,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -23,17 +20,11 @@ import java.io.IOException;
 
 
 public class ListViewDemo extends Application {
+
     Users users;
     Serial serial;
     TableView<User> userTableView;
     ObservableList<User> userObservableList;
-
-    public ListViewDemo( Serial serial, TableView<User> userTableView, ObservableList<User> userObservableList) throws IOException, ClassNotFoundException {
-        this.users = serial.retriveFromFile();
-        this.serial = serial;
-        this.userTableView = userTableView;
-        this.userObservableList = userObservableList;
-    }
 
     public static void main(String[] args) {
         launch(args);
@@ -109,6 +100,8 @@ public class ListViewDemo extends Application {
 
     public ObservableList<User> getUser() throws IOException, ClassNotFoundException {
         this.serial = new Serial("test.out");
+        Users users = serial.retriveFromFile();
+        this.users = users;
         this.userObservableList = FXCollections.observableArrayList();
         for (int i = 0; i < serial.retriveFromFile().users.size(); i++) {
             userObservableList.add(serial.retriveFromFile().users.get(i));
@@ -136,13 +129,21 @@ public class ListViewDemo extends Application {
 
             @Override
             public void handle(ActionEvent event) {
+                Users users = new Users();
+                try {
+                    users=serial.retriveFromFile();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                }
 
-                Counter counter = new Counter();
+                Counter counter = new Counter(users);
                 Integer id = counter.generateId();
                 User user = new User(id, textFieldNAME.getText(), textFieldSURNAME.getText());
-                users.addUser(user);
+                ListViewDemo.this.users.addUser(user);
                 try {
-                    serial.writeUserToFile(users);
+                    serial.writeUserToFile(ListViewDemo.this.users);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
