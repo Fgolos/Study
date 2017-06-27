@@ -20,7 +20,6 @@ import java.io.IOException;
 
 
 public class ListViewDemo extends Application {
-
     Users users;
     Serial serial;
     TableView<User> userTableView;
@@ -33,9 +32,7 @@ public class ListViewDemo extends Application {
 
     public void start(Stage stage) throws IOException, ClassNotFoundException {
 
-
         userTableView = new TableView<>();
-
 
         Scene scene = new Scene(new Group());
         stage.setTitle("Table View Sample");
@@ -57,7 +54,6 @@ public class ListViewDemo extends Application {
         userTableView.setItems(getUser());
         userTableView.getColumns().addAll(idColumn, nameColumn, surnameColumn);
 
-
         Button button = new Button("Add User");
         Button buttonDeleteUser = new Button("Delete user");
 
@@ -71,16 +67,18 @@ public class ListViewDemo extends Application {
         buttonDeleteUser.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
+
                 int selectedItems = userTableView.getSelectionModel().getFocusedIndex();
+                Integer id = (userTableView.getItems().get(selectedItems).getId());
                 userObservableList.remove(selectedItems);
-                Integer id = userTableView.getItems().get(selectedItems).getId();
-                System.out.println(id);
-                //users.removeUserByID(id);
-//                try {
-//                    serial.writeUserToFile(users);
-//                } catch (IOException e) {
-//                    e.printStackTrace();
-//                }
+                System.out.println(id + "текущий ID");
+                users.removeUserByID(id + 1);
+                try {
+                    serial.writeUserToFile(users);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
 
             }
         });
@@ -131,7 +129,7 @@ public class ListViewDemo extends Application {
             public void handle(ActionEvent event) {
                 Users users = new Users();
                 try {
-                    users=serial.retriveFromFile();
+                    users = serial.retriveFromFile();
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (ClassNotFoundException e) {
