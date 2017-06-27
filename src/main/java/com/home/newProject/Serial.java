@@ -32,11 +32,13 @@ public class Serial {
         boolean exists = file.exists();
         if (exists == true) {
             FileInputStream fileInputStream = new FileInputStream(this.fileName);
-            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream);
-            Users users = (Users) objectInputStream.readObject();
+            Users users;
+            try (ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+                users = (Users) objectInputStream.readObject();
+            }
             return users;
         } else {
-            File file1 = new File("C:\\projects\\Study" + fileName);
+            File file1 = new File(fileName);
             file1.createNewFile();
             Users users = new Users();
             writeUserToFile(users);
