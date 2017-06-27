@@ -8,6 +8,10 @@ import javafx.collections.ObservableList;
  * Created by FDR on 27.06.2017.
  */
 public class Counter {
+    public Counter(Users users) {
+        this.users = users;
+    }
+
     Users users;
 
 
