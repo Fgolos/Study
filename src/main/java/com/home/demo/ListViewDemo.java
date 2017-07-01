@@ -71,18 +71,8 @@ public class ListViewDemo extends Application {
                 int selectedItems = userTableView.getSelectionModel().getFocusedIndex();
                 int id = (userTableView.getItems().get(selectedItems).getId());
                 userObservableList.remove(selectedItems);
-               // System.out.println(id + "текущий ID");
-             //   System.out.println(users.users.size() + "до сохранения");
                 users.users.remove(id);
-              //  System.out.println(users.users.size() + "после удаления по ID");
-                try {
-                    serial.writeUserToFile(users);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                //System.out.println(users.users.size()+"после сохранения в файл");
-
-
+                serial.writeUserToFile(users);
             }
         });
 
@@ -99,7 +89,7 @@ public class ListViewDemo extends Application {
         stage.show();
     }
 
-    public ObservableList<User> getUser() throws IOException, ClassNotFoundException {
+    public ObservableList<User> getUser() {
         this.serial = new Serial("test.out");
         Users users = serial.retriveFromFile();
         this.users = users;
@@ -130,24 +120,12 @@ public class ListViewDemo extends Application {
 
             @Override
             public void handle(ActionEvent event) {
-                Users users = new Users();
-                try {
-                    users = serial.retriveFromFile();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    e.printStackTrace();
-                }
-
+                Users users = serial.retriveFromFile();
                 Counter counter = new Counter(users);
                 Integer id = counter.generateId();
                 User user = new User(id, textFieldNAME.getText(), textFieldSURNAME.getText());
                 ListViewDemo.this.users.addUser(user);
-                try {
-                    serial.writeUserToFile(ListViewDemo.this.users);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                serial.writeUserToFile(ListViewDemo.this.users);
                 stageAddUser.close();
                 userObservableList.add(user);
             }
