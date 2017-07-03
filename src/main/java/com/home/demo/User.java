@@ -1,4 +1,4 @@
-package com.home.newProject;
+package com.home.demo;
 
 import java.io.Serializable;
 

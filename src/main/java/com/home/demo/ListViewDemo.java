@@ -1,8 +1,5 @@
 package com.home.demo;
 
-import com.home.newProject.Serial;
-import com.home.newProject.User;
-import com.home.newProject.Users;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,7 +27,7 @@ public class ListViewDemo extends Application {
     }
 
 
-    public void start(Stage stage) throws IOException, ClassNotFoundException {
+    public void start(Stage stage) {
 
         userTableView = new TableView<>();
 
@@ -67,12 +64,13 @@ public class ListViewDemo extends Application {
         buttonDeleteUser.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent event) {
-
+                Users usersNew = new Users();
                 int selectedItems = userTableView.getSelectionModel().getFocusedIndex();
-                int id = (userTableView.getItems().get(selectedItems).getId());
                 userObservableList.remove(selectedItems);
-                users.users.remove(id);
-                serial.writeUserToFile(users);
+                for (int i = 0; i < userObservableList.size(); i++) {
+                    usersNew.addUser(userObservableList.get(i));
+                }
+                serial.writeUserToFile(usersNew);
             }
         });
 

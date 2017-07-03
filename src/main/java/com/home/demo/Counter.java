@@ -1,7 +1,5 @@
 package com.home.demo;
 
-import com.home.newProject.Users;
-
 /**
  * Created by FDR on 27.06.2017.
  */

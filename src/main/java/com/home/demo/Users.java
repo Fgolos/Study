@@ -1,6 +1,5 @@
-package com.home.newProject;
+package com.home.demo;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -14,23 +13,6 @@ public class Users implements Serializable {
         users = new ArrayList<User>();
     }
 
-    public static void main(String[] args) throws IOException, ClassNotFoundException {
-        Users users = new Users();
-        User user = new User(1, "vova", "putin");
-        User user2 = new User(2, "vova2", "putin2");
-        User user1 = new User(3, "Misha", "Keskenen");
-        users.addUser(user1);
-        users.addUser(user);
-        users.addUser(user2);
-        System.out.println(users);
-        users.removeUserByID(35353);
-        System.out.println(users);
-
-
-//        Serial serial = new Serial("test.out");
-//        serial.writeUserToFile(users);
-//        System.out.println(serial.retriveFromFile());
-    }
 
     public ArrayList<User> getUsers() {
         return users;

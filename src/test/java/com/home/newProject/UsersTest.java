@@ -2,9 +2,9 @@ package com.home.newProject;
 
 import static org.junit.Assert.*;
 
+import com.home.demo.User;
+import com.home.demo.Users;
 import org.junit.Test;
-
-import java.io.IOException;
 
 /**
  * Created by z003a0ns on 09.06.2017.
