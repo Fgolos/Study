@@ -1,5 +1,7 @@
 package com.home.demo;
 
+import com.home.mysql.SerialInterface;
+import com.home.mysql.SerialMySQL;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -13,12 +15,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
-import java.io.IOException;
+import java.sql.SQLException;
 
 
 public class ListViewDemo extends Application {
     Users users;
-    Serial serial;
+    SerialInterface serial;
     TableView<User> userTableView;
     ObservableList<User> userObservableList;
 
@@ -27,7 +29,7 @@ public class ListViewDemo extends Application {
     }
 
 
-    public void start(Stage stage) {
+    public void start(Stage stage) throws SQLException {
 
         userTableView = new TableView<>();
 
@@ -70,7 +72,11 @@ public class ListViewDemo extends Application {
                 for (int i = 0; i < userObservableList.size(); i++) {
                     usersNew.addUser(userObservableList.get(i));
                 }
-                serial.writeUserToFile(usersNew);
+                try {
+                    serial.writeUser(usersNew);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -87,13 +93,13 @@ public class ListViewDemo extends Application {
         stage.show();
     }
 
-    public ObservableList<User> getUser() {
-        this.serial = new Serial("test.out");
-        Users users = serial.retriveFromFile();
+    public ObservableList<User> getUser() throws SQLException {
+        this.serial = new SerialMySQL();
+        Users users = serial.loadUsers();
         this.users = users;
         this.userObservableList = FXCollections.observableArrayList();
-        for (int i = 0; i < serial.retriveFromFile().users.size(); i++) {
-            userObservableList.add(serial.retriveFromFile().users.get(i));
+        for (int i = 0; i < serial.loadUsers().users.size(); i++) {
+            userObservableList.add(serial.loadUsers().users.get(i));
         }
         return userObservableList;
     }
@@ -118,12 +124,21 @@ public class ListViewDemo extends Application {
 
             @Override
             public void handle(ActionEvent event) {
-                Users users = serial.retriveFromFile();
+                Users users = null;
+                try {
+                    users = serial.loadUsers();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 Counter counter = new Counter(users);
                 Integer id = counter.generateId();
                 User user = new User(id, textFieldNAME.getText(), textFieldSURNAME.getText());
                 ListViewDemo.this.users.addUser(user);
-                serial.writeUserToFile(ListViewDemo.this.users);
+                try {
+                    serial.writeUser(ListViewDemo.this.users);
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
                 stageAddUser.close();
                 userObservableList.add(user);
             }

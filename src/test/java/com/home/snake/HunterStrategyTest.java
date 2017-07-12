@@ -12,25 +12,28 @@ public class HunterStrategyTest {
     public void hunterGoUpFirst() throws Exception {
         Point hunter = new Point(3, 4);
         Point food = new Point(1, 2);
-        Point newHunterPosition = HunterStrategy.findNextHunterPoint(hunter, food);
+        HunterStrategy hunterStrategy = new HunterStrategy();
+        Point newHunterPosition = hunterStrategy.findNextVerticalHunterPoint(hunter, food);
         assertEquals(newHunterPosition.getX(), hunter.getX());
-        assertEquals(newHunterPosition.getY(), 2);
+        assertEquals(newHunterPosition.getY(), 3);
     }
 
     @Test
     public void hunterGoDown() throws Exception {
         Point food = new Point(3, 4);
         Point hunter = new Point(1, 2);
-        Point newHunterPosition = HunterStrategy.findNextHunterPoint(hunter, food);
+        HunterStrategy hunterStrategy = new HunterStrategy();
+        Point newHunterPosition = hunterStrategy.findNextVerticalHunterPoint(hunter, food);
         assertEquals(newHunterPosition.getX(), hunter.getX());
-        assertEquals(newHunterPosition.getY(), 2);
+        assertEquals(newHunterPosition.getY(), 3);
     }
 
     @Test
     public void hunterMoveXOnlyIfYSame() throws Exception {
-        Point hunter = new Point(0, 0);
-        Point food = new Point(2, 0);
-        Point newHunterPosition = HunterStrategy.findNextHunterPoint(hunter, food);
+        Point hunter = new Point(2, 0);
+        Point food = new Point(0, 0);
+        HunterStrategy hunterStrategy = new HunterStrategy();
+        Point newHunterPosition = hunterStrategy.findNextHorizontalHunterPoint(hunter, food);
         assertEquals(newHunterPosition.getX(), 1);
         assertEquals(newHunterPosition.getY(), hunter.getY());
     }
@@ -39,7 +42,8 @@ public class HunterStrategyTest {
     public void hunterCanGoLeftIfYSame() throws Exception {
         Point food = new Point(0, 0);
         Point hunter = new Point(2, 0);
-        Point newHunterPosition = HunterStrategy.findNextHunterPoint(hunter, food);
+        HunterStrategy hunterStrategy = new HunterStrategy();
+        Point newHunterPosition = hunterStrategy.findNextHorizontalHunterPoint(hunter, food);
         assertEquals(newHunterPosition.getX(), 1);
         assertEquals(newHunterPosition.getY(), hunter.getY());
     }

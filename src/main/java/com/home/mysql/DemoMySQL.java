@@ -6,29 +6,28 @@ import java.sql.*;
  * Created by FDR on 04.07.2017.
  */
 public class DemoMySQL {
-    public static void main(String[] args)
-    {
-        try
-        {
+    public static void main(String[] args) {
+        try {
             // create our mysql database connection
-           // String myDriver = "com.mysql.jdbc.Driver";
+            // String myDriver = "com.mysql.jdbc.Driver";
             String myUrl = "jdbc:mysql://localhost/test";
-          //  Class.forName(myDriver);
+            //  Class.forName(myDriver);
             Connection conn = DriverManager.getConnection(myUrl, "root", "root");
 
             // our SQL SELECT query.
             // if you only need a few columns, specify them by name instead of using "*"
             String query = "SELECT * FROM users";
+            String addUser = "INSERT INTO `test`.`users` (`id`, `first_name`, `last_name`) VALUES ('3', 'n3', 's3');";
 
             // create the java statement
             Statement st = conn.createStatement();
 
             // execute the query, and get a java resultset
             ResultSet rs = st.executeQuery(query);
+            ResultSet rsAddUser = st.executeQuery(addUser);
 
             // iterate through the java resultset
-            while (rs.next())
-            {
+            while (rs.next()) {
                 int id = rs.getInt("id");
                 String firstName = rs.getString("first_name");
                 String lastName = rs.getString("last_name");
@@ -40,9 +39,7 @@ public class DemoMySQL {
                 System.out.format("%s, %s, %s, %s, %s, %s\n", id, firstName, lastName, dateCreated, isAdmin, numPoints);
             }
             st.close();
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             System.err.println("Got an exception! ");
             System.err.println(e.getMessage());
         }

@@ -17,9 +17,9 @@ public class UsersTestSerial {
   throws IOException, ClassNotFoundException {
     Users users = new Users();
     Serial serial = new Serial("test.out");
-    serial.writeUserToFile(users);
+    serial.writeUser(users);
 
-    Users users1 = serial.retriveFromFile();
+    Users users1 = serial.loadUsers();
     assertEquals(users, users1);
   }
 
@@ -33,7 +33,7 @@ public class UsersTestSerial {
     assertEquals(file.exists(), false);
     //when
     final Serial serial = new Serial(file.getAbsolutePath());
-    final Users users = serial.retriveFromFile();
+    final Users users = serial.loadUsers();
     //then
     assertEquals(users.users.size(), 0);
     assertEquals(file.exists(), true);
