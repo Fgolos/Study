@@ -47,4 +47,16 @@ public class HunterStrategyTest {
         assertEquals(newHunterPosition.getX(), 1);
         assertEquals(newHunterPosition.getY(), hunter.getY());
     }
+
+
+    @Test
+    public void verticalStrategyTest() throws Exception {
+        Field field = new Field(5, 5);
+        Point food = new Point(3, 1);
+        Point hunter = new Point(4, 2);
+        HunterStrategy hunterStrategy = new HunterStrategy();
+        Point newHunterPosition = hunterStrategy.findNextVerticalHunterPoint(hunter, food);
+        assertEquals(newHunterPosition.getY(), 1);
+        assertEquals(newHunterPosition.getX(), 4);
+    }
 }

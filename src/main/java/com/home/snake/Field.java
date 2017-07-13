@@ -8,7 +8,6 @@ public class Field {
     int maxY;
 
 
-
     Point food;
     Point hunter;
 
@@ -16,11 +15,11 @@ public class Field {
     public Field(int maxX, int maxY) {
         this.maxX = maxX;
         this.maxY = maxY;
-        this.food = putElementWithRandomCoordinat();
-        this.hunter = putElementWithRandomCoordinat();
+        this.food = createElementWithRandomCoordinat();
+        this.hunter = createElementWithRandomCoordinat();
     }
 
-    public Point putElementWithRandomCoordinat() {
+    public Point createElementWithRandomCoordinat() {
         int x = maxX;
         int y = maxY;
         int coordYpoint = ThreadLocalRandom.current().nextInt(0, y);
@@ -28,6 +27,23 @@ public class Field {
 
         Point point = new Point(coordXpoint, coordYpoint);
         return point;
+    }
+
+    public void playGame() {
+        print();
+        HunterStrategy hunterStrategy = new HunterStrategy();
+        while (food.getY() != hunter.getY()) {
+            Point nextVerticalHunterPoint = hunterStrategy.findNextVerticalHunterPoint(hunter, food);
+            hunter = nextVerticalHunterPoint;
+            print();
+
+        }
+        while (food.getX() != hunter.getX()) {
+            Point nextHorizontalHunterPoint = hunterStrategy.findNextHorizontalHunterPoint(hunter, food);
+            hunter = nextHorizontalHunterPoint;
+            print();
+
+        }
     }
 
     public void print() {
@@ -44,9 +60,12 @@ public class Field {
         }
 
         coordY.get(food.getY()).set(food.getX(), "F");
+        coordY.get(hunter.getY()).set(hunter.getX(), "H");
 
         for (int i = 0; i < coordY.size(); i++) {
             System.out.println(coordY.get(i));
+
         }
+        System.out.println("================================");
     }
 }
