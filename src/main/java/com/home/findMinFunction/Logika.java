@@ -17,7 +17,6 @@ public class Logika {
             System.out.println(lineSegment);
             raznica = Math.abs(lineSegment.a - lineSegment.b);
             System.out.println(raznica);
-
         }
         System.out.println(min);
 
