@@ -7,7 +7,7 @@ public class Logika {
     public static void main(String[] args) {
         Logika logika = new Logika();
         LineSegment lineSegment = new LineSegment(-5.0, 9.0);
-        System.out.println(logika.findMin(lineSegment, 1.0));
+        System.out.println(logika.findMin(lineSegment, 0.00001));
     }
 
     public double function(double x) {
@@ -41,17 +41,21 @@ public class Logika {
         return newlineSegment;
     }
 
-    public double findMin(LineSegment lineSegment, double eps) {
+    public Result findMin(LineSegment lineSegment, double eps) {
         Logika logika = new Logika();
-        double min = 0;
+        Result result = new Result(0, 0.0, 0.0, 0.0);
         LineSegment lineSegment1 = new LineSegment(lineSegment.a, lineSegment.b);
         while (Math.abs(lineSegment1.b - lineSegment1.a) > eps) {
             LineSegment newLineSegment = logika.createNewLineSegment(findFirstPoint(lineSegment1), findSecondPoint(lineSegment1), lineSegment1);
             lineSegment1.a = newLineSegment.a;
             lineSegment1.b = newLineSegment.b;
-            min = (newLineSegment.a + newLineSegment.b) / 2;
+
+            result.counter = result.counter + 1;
+            result.min = (newLineSegment.a + newLineSegment.b) / 2;
+            result.x = logika.findFirstPoint(lineSegment1).x;
+            result.y = logika.findSecondPoint(lineSegment1).y;
         }
-        return min;
+        return result;
 
     }
 }
