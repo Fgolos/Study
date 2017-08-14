@@ -1,5 +1,7 @@
 package com.home.findMinFunction;
 
+import sun.awt.SunHints;
+
 /**
  * Created by FDR on 19.07.2017.
  */
@@ -7,11 +9,13 @@ public class Logika {
     public static void main(String[] args) {
         Logika logika = new Logika();
         LineSegment lineSegment = new LineSegment(-5.0, 9.0);
-        System.out.println(logika.findMin(lineSegment, 0.00001));
+        System.out.println(logika.findMin(lineSegment, 0.1));
+        System.out.println(logika.gradient(0.01));
+        System.out.println(logika.proizvodnaya(-0.00049, 0.00001));
     }
 
     public double function(double x) {
-        double y = x * x;
+        double y = (x + 2) * (x + 2);
         return y;
     }
 
@@ -41,9 +45,31 @@ public class Logika {
         return newlineSegment;
     }
 
+    public double proizvodnaya(double x0, double step) {
+        double x0PlusDeltaX = function(x0 + step);
+        double y0 = function(x0);
+        double proizvodnaya = (x0PlusDeltaX - y0) / step;
+        return proizvodnaya;
+    }
+
+    public Result gradient(double eps) {
+        Logika logika = new Logika();
+        double x = -5;
+        double y = 99999;
+        Integer counter = 0;
+        while (logika.function(x) > eps) {
+            double x1 = x - 0.7 * (logika.proizvodnaya(x, 0.00001));
+            x = x1;
+            double y1 = logika.function(x1);
+            y = y1;
+            counter = counter + 1;
+        }
+        return new Result(counter, x, y);
+    }
+
     public Result findMin(LineSegment lineSegment, double eps) {
         Logika logika = new Logika();
-        Result result = new Result(0, 0.0, 0.0, 0.0);
+        Result result = new Result(0, 0.0, 0.0);
         LineSegment lineSegment1 = new LineSegment(lineSegment.a, lineSegment.b);
         while (Math.abs(lineSegment1.b - lineSegment1.a) > eps) {
             LineSegment newLineSegment = logika.createNewLineSegment(findFirstPoint(lineSegment1), findSecondPoint(lineSegment1), lineSegment1);
@@ -51,7 +77,7 @@ public class Logika {
             lineSegment1.b = newLineSegment.b;
 
             result.counter = result.counter + 1;
-            result.min = (newLineSegment.a + newLineSegment.b) / 2;
+            // result.min = (newLineSegment.a + newLineSegment.b) / 2;
             result.x = logika.findFirstPoint(lineSegment1).x;
             result.y = logika.findSecondPoint(lineSegment1).y;
         }

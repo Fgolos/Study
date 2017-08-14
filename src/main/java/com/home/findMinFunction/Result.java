@@ -5,18 +5,18 @@ package com.home.findMinFunction;
  */
 public class Result {
     Integer counter;
-    double min;
+    //double min;
     double x;
     double y;
-    public Result(Integer counter, double min, double x, double y) {
+    public Result(Integer counter,  double x, double y) {
         this.counter = counter;
-        this.min = min;
+       // this.min = min;
         this.x = x;
         this.y = y;
     }
 
     @Override
     public String toString() {
-        return "Result{" + "counter=" + counter + ", min=" + min + ", x=" + x + ", y=" + y + '}';
+        return "Result{" + "counter=" + counter + ", x=" + x + ", y=" + y + '}';
     }
 }
